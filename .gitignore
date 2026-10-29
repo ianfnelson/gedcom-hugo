@@ -1,0 +1,12 @@
+bin/
+obj/
+*.user
+.vs/
+.idea/
+starter/_generated/
+starter/public/
+starter/resources/
+starter/.hugo_build.lock
+# Real family trees never belong in this repo; only synthetic fixtures under tests/.
+*.ged
+!tests/fixtures/*.ged
