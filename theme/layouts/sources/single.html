@@ -1,0 +1,17 @@
+{{ define "main" }}
+<article class="source">
+  <header class="page-head">
+    <p class="kicker"><a href="{{ "/sources/" | relURL }}">Source</a></p>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.author }}<p class="muted">{{ . }}</p>{{ end }}
+    {{ with .Params.publication }}<p class="muted">{{ . }}</p>{{ end }}
+  </header>
+  {{ with .Content }}<section class="story">{{ . }}</section>{{ end }}
+  {{ with .Params.cited_by }}
+  <section>
+    <h2>Cited for</h2>
+    <ul class="people-list">{{ range . }}<li>{{ partial "person-link.html" . }}</li>{{ end }}</ul>
+  </section>
+  {{ end }}
+</article>
+{{ end }}

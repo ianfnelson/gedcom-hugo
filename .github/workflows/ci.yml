@@ -1,0 +1,46 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.140.2'
+
+      - name: Build the starter site from the sample tree
+        run: ./starter/build.sh "$PWD/tests/fixtures/sample.ged"
+
+      # The sample tree contains people who must never be published. If any of
+      # their names reach the output, the privacy filter has regressed.
+      - name: Privacy regression check
+        run: |
+          if grep -rEl "Peter Lund|Frances Lund|Joan Kirkby|George Lund|Parkin" starter/public; then
+            echo "::error::Withheld people appear in the built site"
+            exit 1
+          fi
+
+  # Rebuilds the private site whenever the converter changes. Needs a repository
+  # variable SITE_REPOSITORY (e.g. owner/family-tree) and a secret SITE_DISPATCH_TOKEN:
+  # a fine-grained token with Contents: read & write on that one repository.
+  notify-site:
+    needs: build
+    if: github.event_name == 'push' && vars.SITE_REPOSITORY != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger site rebuild
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: gh api "repos/${{ vars.SITE_REPOSITORY }}/dispatches" -f event_type=converter-updated

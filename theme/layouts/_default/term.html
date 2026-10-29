@@ -1,0 +1,12 @@
+{{ define "main" }}
+<header class="page-head">
+  <p class="kicker"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a></p>
+  <h1>{{ .Title }}</h1>
+  <p class="muted">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "person" "people" }}</p>
+</header>
+<ul class="plain-list">
+  {{ range .Pages.ByParam "sort_name" }}
+  <li><a href="{{ .RelPermalink }}">{{ .Params.name }}</a>{{ with .Params.lifespan }} <span class="dates">{{ . }}</span>{{ end }}</li>
+  {{ end }}
+</ul>
+{{ end }}

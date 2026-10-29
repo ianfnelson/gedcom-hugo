@@ -1,0 +1,183 @@
+0 HEAD
+1 SOUR FAMILY_HISTORIAN
+2 VERS 7.0.18
+2 NAME Family Historian
+1 GEDC
+2 VERS 5.5.1
+2 FORM LINEAGE-LINKED
+1 CHAR UTF-8
+1 SUBM @SUBM1@
+0 @SUBM1@ SUBM
+1 NAME Sample Submitter
+0 @I1@ INDI
+1 NAME Josiah /Thwaite/
+2 GIVN Josiah
+2 SURN Thwaite
+1 SEX M
+1 BIRT
+2 DATE 14 MAR 1798
+2 PLAC Askrigg, Yorkshire, England
+2 SOUR @S1@
+3 PAGE Entry 212
+3 QUAY 3
+1 OCCU Lead miner
+2 DATE ABT 1841
+2 PLAC Askrigg, Yorkshire, England
+2 SOUR @S2@
+3 PAGE HO107/1264 f.12 p.4
+3 DATA
+4 TEXT Josiah Thwaite, 40, Lead Miner, Y
+1 DEAT
+2 DATE BEF 1871
+2 PLAC Askrigg, Yorkshire, England
+1 NOTE Josiah worked the Wensleydale mines for most of his life. Family tradition hold
+2 CONC s that he walked to work over the fell in all weathers.
+2 CONT
+2 CONT He is said to have played the fiddle at chapel teas.
+1 FAMS @F1@
+0 @I2@ INDI
+1 NAME Hannah /Metcalfe/
+1 SEX F
+1 CHR
+2 DATE 2 FEB 1801
+2 PLAC Bainbridge, Yorkshire, England
+1 DEAT
+2 DATE 30 NOV 1879
+2 PLAC Askrigg, Yorkshire, England
+2 SOUR @S3@
+3 PAGE Dec qtr 1879 Aysgarth 9d 211
+1 FAMS @F1@
+1 NOTE @N1@
+0 @I3@ INDI
+1 NAME Mary Ann "Polly" /Thwaite/
+1 SEX F
+1 BIRT
+2 DATE BET 1825 AND 1827
+2 PLAC Askrigg, Yorkshire, England
+1 DEAT
+2 DATE 1901
+2 PLAC Leyburn, Yorkshire, England
+1 FAMC @F1@
+1 FAMS @F2@
+0 @I4@ INDI
+1 NAME William /Thwaite/
+1 SEX M
+1 BAPM
+2 DATE 9 JUN 1829
+2 PLAC Askrigg, Yorkshire, England
+2 SOUR Askrigg parish register, seen at North Yorkshire County Record Office
+1 FAMC @F1@
+0 @I5@ INDI
+1 NAME Thomas /O'Neill/
+1 SEX M
+1 BIRT
+2 DATE ABT 1822
+2 PLAC Co. Mayo, Ireland
+1 EVEN
+2 TYPE Arrival in Yorkshire
+2 DATE ABT 1847
+1 BURI
+2 DATE 4 JAN 1890
+2 PLAC Leyburn, Yorkshire, England
+1 FAMS @F2@
+0 @I6@ INDI
+1 NAME Élise /O'Neill/
+1 SEX F
+1 BIRT
+2 DATE 1 MAY 1851
+2 PLAC Leyburn, Yorkshire, England
+1 DEAT
+2 DATE 1934
+1 FAMC @F2@
+1 FAMS @F3@
+0 @I7@ INDI
+1 NAME Robert /Kirkby/
+1 SEX M
+1 BIRT
+2 DATE 1849
+1 DEAT
+2 DATE 1920
+1 FAMS @F3@
+0 @I8@ INDI
+1 NAME Arthur /Kirkby/
+1 SEX M
+1 BIRT
+2 DATE 1885
+1 DEAT
+2 DATE 1960
+1 FAMC @F3@
+1 FAMS @F4@
+0 @I9@ INDI
+1 NAME Joan /Kirkby/
+1 SEX F
+1 BIRT
+2 DATE 1925
+1 FAMC @F4@
+1 FAMS @F5@
+0 @I10@ INDI
+1 NAME Peter /Lund/
+1 SEX M
+1 BIRT
+2 DATE 1985
+1 FAMC @F5@
+0 @I11@ INDI
+1 NAME Dorothy /Kirkby/
+1 SEX F
+1 FAMC @F3@
+0 @I12@ INDI
+1 NAME Frances /Lund/
+1 SEX F
+1 BIRT
+2 DATE 1950
+1 RESN privacy
+1 FAMC @F5@
+0 @I13@ INDI
+1 NAME Unknown /Parkin/
+1 SEX U
+0 @I14@ INDI
+1 NAME George /Lund/
+1 SEX M
+1 FAMS @F5@
+0 @F1@ FAM
+1 HUSB @I1@
+1 WIFE @I2@
+1 CHIL @I3@
+1 CHIL @I4@
+1 MARR
+2 DATE 12 OCT 1823
+2 PLAC Aysgarth, Yorkshire, England
+2 SOUR @S1@
+3 PAGE Marriages 1823 no. 41
+0 @F2@ FAM
+1 HUSB @I5@
+1 WIFE @I3@
+1 CHIL @I6@
+1 MARR
+2 DATE 1849
+2 PLAC Leyburn, Yorkshire, England
+0 @F3@ FAM
+1 HUSB @I7@
+1 WIFE @I6@
+1 CHIL @I8@
+1 CHIL @I11@
+0 @F4@ FAM
+1 HUSB @I8@
+1 CHIL @I9@
+0 @F5@ FAM
+1 HUSB @I14@
+1 WIFE @I9@
+1 CHIL @I12@
+1 CHIL @I10@
+1 MARR
+2 DATE 1948
+0 @S1@ SOUR
+1 TITL Aysgarth Parish Registers 1780–1850
+1 AUTH Church of England, Aysgarth
+1 PUBL North Yorkshire County Record Office
+0 @S2@ SOUR
+1 TITL 1841 England Census
+1 PUBL The National Archives, HO107
+0 @S3@ SOUR
+1 TITL GRO Death Index
+0 @N1@ NOTE Hannah was remembered as a formidable baker; her parkin recipe survives in the family.
+0 TRLR

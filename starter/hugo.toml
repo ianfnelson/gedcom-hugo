@@ -1,0 +1,38 @@
+# ---------------------------------------------------------------------------
+# Starter site for gedcom-hugo. Copy this folder, then edit the lines marked ✎.
+# ---------------------------------------------------------------------------
+
+baseURL = "https://example.org/"          # ✎ where the site will live
+languageCode = "en-gb"                    # ✎
+title = "Our Family Tree"                 # ✎
+enableRobotsTXT = true
+disableKinds = ["RSS"]
+
+# The theme. Inside the gedcom-hugo repo it sits one level up; if you copy this
+# folder elsewhere, point themesDir at the folder that contains gedcom-hugo's theme/.
+themesDir = ".."
+theme = "theme"
+
+[params]
+  author = "Your Name"                    # ✎ shown in the footer
+  description = "Family history research: ancestors, their lives, and the records behind them."  # ✎
+
+[taxonomies]
+  surname = "surnames"
+  place = "places"
+
+[sitemap]
+  changeFreq = "monthly"
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+# Your hand-written pages (content/) and the converter's output (_generated/content)
+# appear to Hugo as one content tree. Never edit _generated: it is rebuilt every run.
+[module]
+  [[module.mounts]]
+    source = "content"
+    target = "content"
+  [[module.mounts]]
+    source = "_generated/content"
+    target = "content"

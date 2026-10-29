@@ -1,0 +1,91 @@
+{{ define "jsonld" }}{{ partial "jsonld-person.html" . }}{{ end }}
+
+{{ define "main" }}
+{{ $p := .Params }}
+<article class="person">
+  <header class="person-head">
+    <p class="kicker">{{ with $p.surnames }}{{ range . }}<a href="{{ (printf "/surnames/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}{{ end }}</p>
+    <h1>{{ $p.name }}</h1>
+    {{ with $p.lifespan }}<p class="lifespan">{{ . }}</p>{{ end }}
+    {{ with $p.alt_names }}<p class="aka">Also recorded as {{ delimit . ", " " and " }}</p>{{ end }}
+  </header>
+
+  <section class="vitals">
+    {{ with $p.birth }}<div><span class="label">{{ if eq .label "Birth" }}Born{{ else }}{{ .label }}{{ end }}</span> {{ with .date }}{{ . }}{{ end }}{{ with .place }}<span class="place">, {{ . }}</span>{{ end }}{{ partial "cites.html" . }}</div>{{ end }}
+    {{ with $p.death }}<div><span class="label">{{ if eq .label "Death" }}Died{{ else }}{{ .label }}{{ end }}</span> {{ with .date }}{{ . }}{{ end }}{{ with .place }}<span class="place">, {{ . }}</span>{{ end }}{{ partial "cites.html" . }}</div>{{ end }}
+  </section>
+
+  {{ with .Content }}
+  <section class="story">
+    {{ . }}
+  </section>
+  {{ end }}
+
+  {{ with $p.events }}
+  <section>
+    <h2>Life events</h2>
+    <ol class="timeline">
+      {{ range . }}
+      <li>
+        <span class="when">{{ with .date }}{{ . }}{{ else }}<em>undated</em>{{ end }}</span>
+        <span class="what">
+          <strong>{{ .label }}</strong>{{ with .value }}: {{ . }}{{ end }}{{ with .place }}<span class="place"> · {{ . }}</span>{{ end }}{{ partial "cites.html" . }}
+          {{ with .note }}<span class="event-note">{{ . }}</span>{{ end }}
+        </span>
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ end }}
+
+  <section class="family">
+    <h2>Family</h2>
+    <div class="family-grid">
+      {{ with $p.parents }}
+      <div>
+        <h3>Parents</h3>
+        <ul>{{ range . }}<li>{{ partial "person-link.html" . }}</li>{{ end }}</ul>
+      </div>
+      {{ end }}
+      {{ with $p.siblings }}
+      <div>
+        <h3>Siblings</h3>
+        <ul>{{ range . }}<li>{{ partial "person-link.html" . }}</li>{{ end }}</ul>
+      </div>
+      {{ end }}
+      {{ range $p.families }}
+      <div>
+        <h3>{{ if .spouse }}With {{ partial "person-link.html" .spouse }}{{ else }}Family{{ end }}</h3>
+        {{ with .marriage }}<p class="marriage">Married {{ with .date }}{{ . }}{{ end }}{{ with .place }}, {{ . }}{{ end }}{{ partial "cites.html" . }}</p>{{ end }}
+        {{ with .children }}<ul>{{ range . }}<li>{{ partial "person-link.html" . }}</li>{{ end }}</ul>{{ else }}<p class="muted">No children recorded.</p>{{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </section>
+
+  {{ with $p.pedigree }}{{ if or .father .mother }}
+  <section>
+    <h2>Ancestors</h2>
+    <div class="pedigree">{{ partial "pedigree.html" . }}</div>
+  </section>
+  {{ end }}{{ end }}
+
+  {{ with $p.citations }}
+  <section class="sources">
+    <h2>Sources</h2>
+    <ol>
+      {{ range . }}
+      <li id="cite-{{ .n }}">
+        {{- if .url }}<a href="{{ .url | relURL }}"><cite>{{ .source }}</cite></a>{{ else }}<cite>{{ .source }}</cite>{{ end }}
+        {{- with .page }}, {{ . }}{{ end }}
+        {{- with .quality }} <span class="quality">({{ . }})</span>{{ end }}
+        {{ with .text }}<blockquote>{{ . }}</blockquote>{{ end }}
+      </li>
+      {{ end }}
+    </ol>
+  </section>
+  {{ else }}
+  <aside class="unsourced">No sources are cited for this person yet; treat these details as unverified.</aside>
+  {{ end }}
+</article>
+{{ end }}

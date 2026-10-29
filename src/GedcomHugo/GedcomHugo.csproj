@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>gedcom-hugo</AssemblyName>
+    <RootNamespace>GedcomHugo</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- Runs on newer runtimes (e.g. .NET 10) without retargeting -->
+    <RollForward>Major</RollForward>
+
+    <!-- Packable as a .NET tool: dotnet tool install -g gedcom-hugo -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>gedcom-hugo</ToolCommandName>
+    <PackageId>gedcom-hugo</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Ian Nelson</Authors>
+    <Description>Turns a GEDCOM family tree into a static Hugo site, with living people withheld.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>

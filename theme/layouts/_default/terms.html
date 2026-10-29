@@ -1,0 +1,11 @@
+{{ define "main" }}
+<header class="page-head">
+  <h1>{{ .Title }}</h1>
+  <p class="muted">{{ len .Data.Terms }} {{ lower .Title }}, with the number of people linked to each.</p>
+</header>
+<ul class="term-cloud">
+  {{ range .Data.Terms.Alphabetical }}
+  <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> <span class="count">{{ .Count }}</span></li>
+  {{ end }}
+</ul>
+{{ end }}

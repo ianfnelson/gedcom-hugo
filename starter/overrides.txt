@@ -1,0 +1,7 @@
+# Privacy overrides for gedcom-hugo (pass with --overrides overrides.txt).
+# One decision per line; record ids as shown in your genealogy program.
+#
+#   publish  I123   # undated, but certainly dead: born in the 1700s
+#   withhold I456   # asked not to appear on the site
+#
+# "withhold" always wins over "publish" and over the automatic rules.

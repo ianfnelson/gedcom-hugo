@@ -1,0 +1,12 @@
+{{ define "main" }}
+<header class="page-head">
+  <h1>Sources</h1>
+  {{ with .Description }}<p class="muted">{{ . }}</p>{{ end }}
+  {{ with .Content }}<div class="story">{{ . }}</div>{{ end }}
+</header>
+<ul class="plain-list">
+  {{ range .Pages.ByTitle }}
+  <li><a href="{{ .RelPermalink }}">{{ .Title }}</a> <span class="dates">cited for {{ len .Params.cited_by }} {{ cond (eq (len .Params.cited_by) 1) "person" "people" }}</span></li>
+  {{ end }}
+</ul>
+{{ end }}

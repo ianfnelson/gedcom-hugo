@@ -1,0 +1,6 @@
+{{- /* Renders a person reference emitted by gedcom-hugo: {id, name, lifespan, url} or {name: "Private", private: true} */ -}}
+{{- if .private -}}
+<span class="private">Private</span>
+{{- else -}}
+<a href="{{ .url | relURL }}">{{ .name }}</a>{{ with .lifespan }} <span class="dates">{{ . }}</span>{{ end }}
+{{- end -}}

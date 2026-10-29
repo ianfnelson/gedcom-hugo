@@ -1,0 +1,27 @@
+{{ define "main" }}
+<header class="page-head">
+  <h1>People</h1>
+  <p class="muted">{{ len .Pages }} people, arranged by surname.</p>
+  {{ with .Content }}<div class="story">{{ . }}</div>{{ end }}
+</header>
+
+{{ $bySurname := .Pages.GroupByParam "surname" }}
+<nav class="alpha">
+  {{ $seen := slice }}
+  {{ range $bySurname }}{{ $l := upper (substr .Key 0 1) }}{{ if and $l (not (in $seen $l)) }}{{ $seen = $seen | append $l }}<a href="#letter-{{ $l }}">{{ $l }}</a>{{ end }}{{ end }}
+</nav>
+
+{{ $current := "" }}
+{{ range $bySurname }}
+  {{ $l := upper (substr .Key 0 1) }}
+  <section class="surname-group"{{ if ne $l $current }} id="letter-{{ $l }}"{{ end }}>
+    {{ $current = $l }}
+    <h2><a href="{{ (printf "/surnames/%s/" (urlize .Key)) | relURL }}">{{ default "(no surname)" .Key }}</a></h2>
+    <ul class="people-list">
+      {{ range .Pages.ByParam "sort_name" }}
+      <li><a href="{{ .RelPermalink }}">{{ .Params.given }}</a>{{ with .Params.lifespan }} <span class="dates">{{ . }}</span>{{ end }}</li>
+      {{ end }}
+    </ul>
+  </section>
+{{ end }}
+{{ end }}

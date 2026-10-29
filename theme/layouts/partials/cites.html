@@ -1,0 +1,1 @@
+{{- with .cites -}}<sup class="cites">{{ range $i, $n := . }}{{ if $i }},{{ end }}<a href="#cite-{{ $n }}" aria-label="Citation {{ $n }}">{{ $n }}</a>{{ end }}</sup>{{- end -}}

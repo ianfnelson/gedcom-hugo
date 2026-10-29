@@ -1,0 +1,26 @@
+{{ define "main" }}
+{{ $people := where site.RegularPages "Section" "people" }}
+<section class="hero">
+  <h1>{{ site.Title }}</h1>
+  <div class="lede">{{ .Content }}</div>
+  <p class="stats">{{ len $people }} people · {{ len site.Taxonomies.surnames }} surnames · {{ len site.Taxonomies.places }} places · {{ len (where site.RegularPages "Section" "sources") }} sources</p>
+</section>
+
+<section>
+  <h2>Surnames</h2>
+  <ul class="term-cloud">
+    {{ range site.Taxonomies.surnames.ByCount }}
+    <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> <span class="count">{{ .Count }}</span></li>
+    {{ end }}
+  </ul>
+</section>
+
+<section>
+  <h2>Earliest ancestors</h2>
+  <ul class="plain-list">
+    {{ range first 8 (sort (where $people "Params.birth_year" "!=" nil) "Params.birth_year") }}
+    <li><a href="{{ .RelPermalink }}">{{ .Params.name }}</a> <span class="dates">{{ .Params.lifespan }}</span></li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}

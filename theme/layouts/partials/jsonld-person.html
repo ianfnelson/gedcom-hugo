@@ -1,0 +1,27 @@
+{{- /* schema.org Person, so search engines understand who this page is about and how they connect. */ -}}
+{{- $p := .Params -}}
+{{- $ld := dict "@context" "https://schema.org" "@type" "Person" "@id" .Permalink "url" .Permalink "name" $p.name -}}
+{{- with $p.given }}{{ $ld = merge $ld (dict "givenName" .) }}{{ end -}}
+{{- with $p.surname }}{{ $ld = merge $ld (dict "familyName" .) }}{{ end -}}
+{{- with $p.alt_names }}{{ $ld = merge $ld (dict "alternateName" .) }}{{ end -}}
+{{- with $p.sex }}{{ if eq . "M" }}{{ $ld = merge $ld (dict "gender" "https://schema.org/Male") }}{{ else if eq . "F" }}{{ $ld = merge $ld (dict "gender" "https://schema.org/Female") }}{{ end }}{{ end -}}
+{{- with $p.birth }}
+  {{- with .iso }}{{ $ld = merge $ld (dict "birthDate" .) }}{{ end -}}
+  {{- with .place }}{{ $ld = merge $ld (dict "birthPlace" (dict "@type" "Place" "name" .)) }}{{ end -}}
+{{- end -}}
+{{- with $p.death }}
+  {{- with .iso }}{{ $ld = merge $ld (dict "deathDate" .) }}{{ end -}}
+  {{- with .place }}{{ $ld = merge $ld (dict "deathPlace" (dict "@type" "Place" "name" .)) }}{{ end -}}
+{{- end -}}
+{{- $parents := slice }}{{ range $p.parents }}{{ if not .private }}{{ $parents = $parents | append (dict "@type" "Person" "@id" (absURL .url) "name" .name) }}{{ end }}{{ end -}}
+{{- with $parents }}{{ $ld = merge $ld (dict "parent" .) }}{{ end -}}
+{{- $sibs := slice }}{{ range $p.siblings }}{{ if not .private }}{{ $sibs = $sibs | append (dict "@type" "Person" "@id" (absURL .url) "name" .name) }}{{ end }}{{ end -}}
+{{- with $sibs }}{{ $ld = merge $ld (dict "sibling" .) }}{{ end -}}
+{{- $spouses := slice }}{{ $kids := slice -}}
+{{- range $p.families }}
+  {{- with .spouse }}{{ if not .private }}{{ $spouses = $spouses | append (dict "@type" "Person" "@id" (absURL .url) "name" .name) }}{{ end }}{{ end -}}
+  {{- range .children }}{{ if not .private }}{{ $kids = $kids | append (dict "@type" "Person" "@id" (absURL .url) "name" .name) }}{{ end }}{{ end -}}
+{{- end -}}
+{{- with $spouses }}{{ $ld = merge $ld (dict "spouse" .) }}{{ end -}}
+{{- with $kids }}{{ $ld = merge $ld (dict "children" .) }}{{ end -}}
+<script type="application/ld+json">{{ $ld | jsonify | safeJS }}</script>

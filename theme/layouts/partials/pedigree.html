@@ -1,0 +1,10 @@
+{{- /* Recursive pedigree: a person box with their parents stacked to the right. */ -}}
+<div class="ped-node">
+  <div class="ped-box{{ if .person.private }} is-private{{ end }}">{{ partial "person-link.html" .person }}</div>
+  {{- if or .father .mother }}
+  <div class="ped-parents">
+    {{ with .father }}{{ partial "pedigree.html" . }}{{ else }}<div class="ped-node"><div class="ped-box is-unknown">Father unknown</div></div>{{ end }}
+    {{ with .mother }}{{ partial "pedigree.html" . }}{{ else }}<div class="ped-node"><div class="ped-box is-unknown">Mother unknown</div></div>{{ end }}
+  </div>
+  {{- end }}
+</div>
