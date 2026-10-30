@@ -8,7 +8,7 @@ const string Usage = """
 
       --gedcom <file>       GEDCOM 5.5.1 export (UTF-8), e.g. from Family Historian
       --out <dir>           output folder, rebuilt on every run (conventionally site/_generated);
-                            Hugo content is written to <dir>/content
+                            Hugo content is written to <dir>/content, site data to <dir>/data
       --overrides <file>    publish/withhold decisions that beat the automatic privacy rules
       --living-years <n>    treat anyone born in the last n years with no death record as
                             possibly living (default 110)
@@ -38,7 +38,7 @@ try
     var (forcedPublic, forcedPrivate) = overrides.Apply(tree, privacy, warnings.Add);
 
     OutputDirectory.Prepare(outDir);
-    var (people, sources) = new HugoWriter(tree, Path.Combine(outDir, "content")).Write();
+    var (people, sources) = new HugoWriter(tree, outDir, DateTime.UtcNow).Write();
 
     Console.WriteLine($"Read {tree.People.Count} people, {tree.Families.Count} families, {tree.Sources.Count} sources.");
     Console.WriteLine($"Wrote {people} person pages and {sources} source pages to {Path.GetFullPath(outDir)}.");

@@ -2,6 +2,8 @@
 1 SOUR FAMILY_HISTORIAN
 2 VERS 7.0.18
 2 NAME Family Historian
+1 DATE 20 JUN 2025
+2 TIME 09:00:00
 1 GEDC
 2 VERS 5.5.1
 2 FORM LINEAGE-LINKED
@@ -35,6 +37,9 @@
 2 CONT
 2 CONT He is said to have played the fiddle at chapel teas.
 1 FAMS @F1@
+1 CHAN
+2 DATE 12 MAR 2024
+3 TIME 09:05:00
 0 @I2@ INDI
 1 NAME Hannah /Metcalfe/
 1 SEX F
@@ -120,6 +125,10 @@
 1 BIRT
 2 DATE 1985
 1 FAMC @F5@
+1 SOUR @S4@
+1 CHAN
+2 DATE 1 JUN 2025
+3 TIME 10:00:00
 0 @I11@ INDI
 1 NAME Dorothy /Kirkby/
 1 SEX F
@@ -148,6 +157,9 @@
 2 PLAC Aysgarth, Yorkshire, England
 2 SOUR @S1@
 3 PAGE Marriages 1823 no. 41
+1 CHAN
+2 DATE 12 MAR 2024
+3 TIME 18:40:12
 0 @F2@ FAM
 1 HUSB @I5@
 1 WIFE @I3@
@@ -163,6 +175,9 @@
 0 @F4@ FAM
 1 HUSB @I8@
 1 CHIL @I9@
+1 CHAN
+2 DATE 2 JUN 2025
+3 TIME 10:00:00
 0 @F5@ FAM
 1 HUSB @I14@
 1 WIFE @I9@
@@ -174,10 +189,18 @@
 1 TITL Aysgarth Parish Registers 1780–1850
 1 AUTH Church of England, Aysgarth
 1 PUBL North Yorkshire County Record Office
+1 CHAN
+2 DATE 2 JAN 2024
+3 TIME 11:00:00
 0 @S2@ SOUR
 1 TITL 1841 England Census
 1 PUBL The National Archives, HO107
 0 @S3@ SOUR
 1 TITL GRO Death Index
+0 @S4@ SOUR
+1 TITL Letter held by the family
+1 CHAN
+2 DATE 3 JUN 2025
+3 TIME 10:00:00
 0 @N1@ NOTE Hannah was remembered as a formidable baker; her parkin recipe survives in the family.
 0 TRLR

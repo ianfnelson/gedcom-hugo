@@ -15,8 +15,10 @@ namespace GedcomHugo;
 ///
 /// URLs are keyed on the Family Historian record id (/people/i123/), so
 /// correcting a name never breaks an inbound link or a search index entry.
+///
+/// Site-wide values go to data/site.json, for the theme to read as site.Data.site.
 /// </summary>
-public sealed class HugoWriter(Tree tree, string contentDir)
+public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
 {
     private static readonly JsonSerializerOptions Json = new()
     {
@@ -30,8 +32,8 @@ public sealed class HugoWriter(Tree tree, string contentDir)
 
     public (int People, int Sources) Write()
     {
-        var peopleDir = Path.Combine(contentDir, "people");
-        var sourcesDir = Path.Combine(contentDir, "sources");
+        var peopleDir = Path.Combine(outDir, "content", "people");
+        var sourcesDir = Path.Combine(outDir, "content", "sources");
 
         Directory.CreateDirectory(peopleDir);
         Directory.CreateDirectory(sourcesDir);
@@ -58,7 +60,38 @@ public sealed class HugoWriter(Tree tree, string contentDir)
             sources++;
         }
 
+        WriteSiteData();
+
         return (people, sources);
+    }
+
+    // ---------------------------------------------------------------- site data
+
+    /// <summary>
+    /// "Last updated" looks at published records only, so that an edit to a living
+    /// person can't move it, even indirectly. Call once the sources are known.
+    /// </summary>
+    private void WriteSiteData()
+    {
+        var published = tree.People.Values.Where(p => !p.IsPrivate).Select(p => p.LastChanged)
+            .Concat(tree.Families.Values.Where(IsPublished).Select(f => f.LastChanged))
+            .Concat(tree.Sources.Values.Where(s => _citedBy.ContainsKey(s.Id)).Select(s => s.LastChanged));
+
+        var data = new SiteData(LastUpdated: published.Max() ?? tree.Exported ?? buildTime);
+
+        var dataDir = Path.Combine(outDir, "data");
+        Directory.CreateDirectory(dataDir);
+        File.WriteAllText(Path.Combine(dataDir, "site.json"), JsonSerializer.Serialize(data, Json), new UTF8Encoding(false));
+    }
+
+    /// <summary>
+    /// A family has no page of its own, and its record changes when a member is added
+    /// or reordered, so one with a withheld member could give away an edit to them.
+    /// </summary>
+    private bool IsPublished(Family f)
+    {
+        var members = f.SpouseIds.Concat(f.ChildIds).ToList();
+        return members.Count > 0 && members.All(id => tree.Person(id) is { IsPrivate: false });
     }
 
     // ---------------------------------------------------------------- people
@@ -213,6 +246,8 @@ public sealed class HugoWriter(Tree tree, string contentDir)
         PedigreeNode? Pedigree, List<CitationBlock> Citations, List<string> Surnames, List<string> Places);
 
     private sealed record SourcePage(string Title, string SourceId, string? Author, string? Publication, List<PersonRef> CitedBy);
+
+    private sealed record SiteData(DateTime LastUpdated);
 
     /// <summary>Numbers citations per page, de-duplicating identical source+page pairs.</summary>
     private sealed class CitationLedger(Tree tree)

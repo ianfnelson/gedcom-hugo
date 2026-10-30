@@ -32,6 +32,14 @@ jobs:
             exit 1
           fi
 
+      # The sample tree has later CHAN dates on a withheld person, a family with a
+      # withheld child and a source only withheld people cite, and a later export date.
+      # If any of them moves this date, edits to living people are showing through.
+      - name: Last updated check
+        run: |
+          grep -q '"last_updated": "2024-03-12T18:40:12"' starter/_generated/data/site.json
+          grep -q 'updated 12 March 2024' starter/public/index.html
+
   # Rebuilds the private site whenever the converter changes. Needs a repository
   # variable SITE_REPOSITORY (e.g. owner/family-tree) and a secret SITE_DISPATCH_TOKEN:
   # a fine-grained token with Contents: read & write on that one repository.
