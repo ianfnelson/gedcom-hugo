@@ -3,7 +3,7 @@
 <section class="hero">
   <h1>{{ site.Title }}</h1>
   <div class="lede">{{ .Content }}</div>
-  <p class="stats">{{ len $people }} people · {{ len site.Taxonomies.surnames }} surnames · {{ len site.Taxonomies.places }} places · {{ len (where site.RegularPages "Section" "sources") }} sources</p>
+  <p class="stats">{{ len $people }} people · {{ len site.Taxonomies.surnames }} surnames · {{ len site.Taxonomies.places }} places · {{ len (where site.RegularPages "Section" "sources") }} sources{{ with partial "last-updated.html" . }} · updated {{ . }}{{ end }}</p>
 </section>
 
 <section>

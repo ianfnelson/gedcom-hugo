@@ -27,6 +27,7 @@ public sealed class Person
     public List<string> ChildOfFamilies { get; } = new();     // FAMC
     public List<string> SpouseInFamilies { get; } = new();    // FAMS
     public bool RestrictedInFile { get; set; }               // RESN privacy/confidential, or FH "living" flag
+    public DateTime? LastChanged { get; set; }               // CHAN
 
     public bool IsPrivate { get; set; }                      // decided by PrivacyFilter
     public int? EstimatedBirthYear { get; set; }
@@ -48,6 +49,7 @@ public sealed class Family
     public List<string> ChildIds { get; } = new();
     public List<LifeEvent> Events { get; } = new();
     public List<string> Notes { get; } = new();
+    public DateTime? LastChanged { get; set; }               // CHAN
 
     public IEnumerable<string> SpouseIds => new[] { HusbandId, WifeId }.Where(x => x is not null)!;
     public string? OtherSpouse(string personId) => HusbandId == personId ? WifeId : WifeId == personId ? HusbandId : null;
@@ -61,6 +63,7 @@ public sealed class Source
     public string? Publication { get; set; }
     public string? Text { get; set; }
     public List<string> Notes { get; } = new();
+    public DateTime? LastChanged { get; set; }               // CHAN
 }
 
 public sealed class Tree
@@ -69,6 +72,7 @@ public sealed class Tree
     public Dictionary<string, Family> Families { get; } = new();
     public Dictionary<string, Source> Sources { get; } = new();
     public Dictionary<string, string> SharedNotes { get; } = new();
+    public DateTime? Exported { get; set; }                  // HEAD.DATE
 
     public Person? Person(string? id) => id is not null && People.TryGetValue(id, out var p) ? p : null;
     public Family? Family(string? id) => id is not null && Families.TryGetValue(id, out var f) ? f : null;

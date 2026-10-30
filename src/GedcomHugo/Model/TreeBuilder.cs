@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.RegularExpressions;
 using GedcomHugo.Gedcom;
 
@@ -26,7 +27,7 @@ public static partial class TreeBuilder
 
     public static Tree Build(IReadOnlyList<GedcomNode> roots, Action<string> warn)
     {
-        var tree = new Tree();
+        var tree = new Tree { Exported = Timestamp(roots.FirstOrDefault(r => r.Tag == "HEAD")) };
 
         foreach (var note in roots.Where(r => r.Tag == "NOTE" && r.XRef is not null))
             tree.SharedNotes[Strip(note.XRef!)] = note.Value;
@@ -58,7 +59,7 @@ public static partial class TreeBuilder
 
     private static Person BuildPerson(GedcomNode n, Tree tree)
     {
-        var p = new Person { Id = Strip(n.XRef!) };
+        var p = new Person { Id = Strip(n.XRef!), LastChanged = Timestamp(n.Child("CHAN")) };
 
         var names = n.All("NAME").ToList();
         if (names.Count > 0)
@@ -106,7 +107,7 @@ public static partial class TreeBuilder
 
     private static Family BuildFamily(GedcomNode n, Tree tree)
     {
-        var f = new Family { Id = Strip(n.XRef!) };
+        var f = new Family { Id = Strip(n.XRef!), LastChanged = Timestamp(n.Child("CHAN")) };
         foreach (var c in n.Children)
         {
             switch (c.Tag)
@@ -133,6 +134,7 @@ public static partial class TreeBuilder
             Author = n.ChildValue("AUTH"),
             Publication = n.ChildValue("PUBL"),
             Text = n.ChildValue("TEXT"),
+            LastChanged = Timestamp(n.Child("CHAN")),
         };
         foreach (var note in n.All("NOTE")) AddNote(s.Notes, note, tree);
         return s;
@@ -183,6 +185,19 @@ public static partial class TreeBuilder
             if (tree.SharedNotes.TryGetValue(Strip(note.Value), out var shared)) into.Add(shared);
         }
         else if (!string.IsNullOrWhiteSpace(note.Value)) into.Add(note.Value.Trim());
+    }
+
+    /// <summary>
+    /// The DATE and TIME beneath a CHAN or HEAD. GEDCOM times have no zone, so this is the
+    /// author's local time. A bad date counts as no date; a bad or missing TIME as midnight.
+    /// </summary>
+    private static DateTime? Timestamp(GedcomNode? n)
+    {
+        var date = n?.Child("DATE");
+        if (!DateOnly.TryParseExact(date?.Value.Trim(), "d MMM yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var day))
+            return null;
+        TimeOnly.TryParse(date!.ChildValue("TIME"), CultureInfo.InvariantCulture, out var time);
+        return day.ToDateTime(time);
     }
 
     public static string Strip(string xref) => xref.Trim().Trim('@');

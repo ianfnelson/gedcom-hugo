@@ -76,6 +76,7 @@ withhold I456   # asked not to appear
 - **Front matter is JSON**, which Hugo reads natively. No amount of `Mary Ann "Polly" O'Neill` can break it.
 - **Dates are rendered as recorded.** `BEF 1871` becomes "before 1871" in the text and `bef.1871` in lifespans. Only exact Gregorian dates go into schema.org data. Julian and dual-dated values (`1751/52`) are shown as written and sorted by their New Style year.
 - **Notes become page prose**, rendered as Markdown with raw HTML disabled.
+- **"Last updated" means the research, not the build.** The homepage shows the latest `CHAN` on a published person, source or family, falling back to the GEDCOM's export date and then the build time. A family counts only if everyone in it is published, so editing a living person can't move the date, even indirectly. To show it elsewhere, such as your footer, use `{{ partial "last-updated.html" . }}`.
 
 ## Not yet supported
 

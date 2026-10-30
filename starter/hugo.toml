@@ -28,7 +28,8 @@ theme = "theme"
   unsafe = false
 
 # Your hand-written pages (content/) and the converter's output (_generated/content)
-# appear to Hugo as one content tree. Never edit _generated: it is rebuilt every run.
+# appear to Hugo as one content tree, and likewise for data/. Never edit _generated:
+# it is rebuilt every run.
 [module]
   [[module.mounts]]
     source = "content"
@@ -36,3 +37,9 @@ theme = "theme"
   [[module.mounts]]
     source = "_generated/content"
     target = "content"
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+  [[module.mounts]]
+    source = "_generated/data"
+    target = "data"
