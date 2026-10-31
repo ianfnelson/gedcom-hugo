@@ -25,8 +25,8 @@ expect_rows() {
 # MARR must appear, and the undated licence sorts last, as undated events do.
 expect_rows i1 'Birth|Banns with|Marriage to|Occupation|Death'
 expect_rows i2 'Christening|Banns with|Marriage to|Death'
-expect_rows i3 'Birth|Marriage to|Marriage to|Death|Marriage licence with'
-expect_rows i6 'Birth|Engagement to|Marriage to|Marriage settlement with|Divorce from|Death'
+expect_rows i3 'Birth|Marriage to|Marriage to|Annulment from|Death|Marriage licence with'
+expect_rows i6 'Birth|Engagement to|Marriage contract with|Marriage to|Marriage settlement with|Divorce filed from|Divorce from|Death'
 
 # I8's second family has a withheld spouse, so none of its events may appear.
 expect_rows i8 'Birth|Death'

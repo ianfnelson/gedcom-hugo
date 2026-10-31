@@ -236,7 +236,7 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
 
     /// <summary>Reads on into the spouse's name: "Marriage to", "Divorce from", "Banns with".</summary>
     private static string LabelWithSpouse(LifeEvent e) =>
-        $"{e.Label} {e.Tag switch { "MARR" or "ENGA" => "to", "DIV" => "from", _ => "with" }}";
+        $"{e.Label} {e.Tag switch { "MARR" or "ENGA" => "to", "DIV" or "DIVF" or "ANUL" => "from", _ => "with" }}";
 
     private static PersonRef Ref(Person p) => p.IsPrivate
         ? new PersonRef(null, "Private", null, null, true)

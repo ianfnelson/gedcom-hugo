@@ -179,6 +179,8 @@
 1 MARR
 2 DATE 1850
 2 PLAC Richmond, Yorkshire, England
+1 ANUL
+2 DATE 1852
 1 MARL
 2 PLAC Ripon, Yorkshire, England
 0 @F3@ FAM
@@ -191,8 +193,12 @@
 1 MARR
 2 DATE 1874
 2 PLAC Hawes, Yorkshire, England
+1 MARC
+2 DATE 1873
 1 MARS
 2 DATE 1874
+1 DIVF
+2 DATE 1889
 1 DIV
 2 DATE 1890
 2 PLAC London, England
