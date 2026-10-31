@@ -24,10 +24,11 @@ jobs:
         run: ./starter/build.sh "$PWD/tests/fixtures/sample.ged"
 
       # The sample tree contains people who must never be published. If any of
-      # their names reach the output, the privacy filter has regressed.
+      # their names reach the output, the privacy filter has regressed. Whitby,
+      # Scarborough and April 1950 appear only on events of a family with a withheld spouse.
       - name: Privacy regression check
         run: |
-          if grep -rEl "Peter Lund|Frances Lund|Joan Kirkby|George Lund|Parkin" starter/public; then
+          if grep -rEl "Peter Lund|Frances Lund|Joan Kirkby|George Lund|Parkin|Hodgson|Whitby|Scarborough|April 1950" starter/public; then
             echo "::error::Withheld people appear in the built site"
             exit 1
           fi
@@ -60,6 +61,9 @@ jobs:
             echo "::error::A family with a withheld member moved a person's date"
             exit 1
           fi
+
+      - name: Family events check
+        run: tests/check-family-events.sh
 
       # Hugo silently drops a page published in the future, and lastmod sets that date.
       # Rebuilds the site, so keep this after the checks on the sample tree.

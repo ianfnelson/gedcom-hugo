@@ -59,7 +59,7 @@ dotnet run --project src/GedcomHugo -c Release -- \
 
 A person is published only if they have a death, burial, cremation, probate or will record, or an estimated birth year more than 110 years ago (`--living-years` to change). Birth years are estimated from baptism, marriage (−20 years), parents (+25), children (−25) and spouses, up to three steps away, taking the *latest* candidate. Anyone with no datable relative within three steps is withheld. `RESN privacy` or `RESN confidential` always withholds.
 
-Withheld people appear on relatives' pages as an unlinked "Private". A marriage to a withheld spouse shows no date or place. Sources are published only when they support something that is published.
+Withheld people appear on relatives' pages as an unlinked "Private". A marriage or other family event appears in both spouses' Life events, but one with a withheld spouse isn't shown at all, and neither its place nor its sources are published. Sources are published only when they support something that is published.
 
 `overrides.txt` takes one decision per line:
 

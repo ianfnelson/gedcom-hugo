@@ -99,20 +99,18 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
     private PersonPage BuildPersonPage(Person p)
     {
         var citations = new CitationLedger(tree);
-        var events = p.Events
-            .OrderBy(e => e.Date?.SortKey ?? int.MaxValue)
-            .Select(e => ToEvent(e, citations))
+        var events = p.Events.Select(e => (Event: e, Spouse: (Person?)null))
+            .Concat(FamilyEvents(p))
+            .OrderBy(x => x.Event.Date?.SortKey ?? int.MaxValue)
+            .Select(x => ToEvent(x.Event, citations, x.Spouse))
             .ToList();
         foreach (var c in p.Citations) citations.Number(c);
 
         var families = p.SpouseInFamilies.Select(tree.Family).Where(f => f is not null).Select(f =>
         {
             var spouse = tree.Person(f!.OtherSpouse(p.Id));
-            var marriage = f.Events.FirstOrDefault(e => e.Tag == "MARR");
-            var showDetails = spouse is null || !spouse.IsPrivate;
             return new FamilyBlock(
                 Spouse: spouse is null ? null : Ref(spouse),
-                Marriage: showDetails && marriage is not null ? ToEvent(marriage, citations) : null,
                 Children: f.ChildIds.Select(tree.Person).Where(c => c is not null)
                     .OrderBy(c => c!.EstimatedBirthYear ?? int.MaxValue).Select(c => Ref(c!)).ToList());
         }).ToList();
@@ -128,7 +126,7 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
         var lifespan = Lifespan(p);
         var updated = LastUpdated(p);
         var surnames = new[] { p.Surname }.Where(s => s.Length > 0).ToList();
-        var places = p.Events.Select(e => e.Place).Concat(families.Select(f => f.Marriage?.Place))
+        var places = events.Select(e => e.Place)
             .Where(pl => !string.IsNullOrWhiteSpace(pl)).Select(pl => pl!).Distinct().ToList();
 
         return new PersonPage(
@@ -156,6 +154,16 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
             Surnames: surnames,
             Places: places);
     }
+
+    /// <summary>
+    /// Events of the families p is a spouse in. An event is as much about the other spouse,
+    /// so a family with a withheld spouse contributes none: no date, place or citation.
+    /// Checks both spouses, as a one-sided FAMS can put p in a family that doesn't list them.
+    /// </summary>
+    private IEnumerable<(LifeEvent Event, Person? Spouse)> FamilyEvents(Person p) =>
+        p.SpouseInFamilies.Select(tree.Family)
+            .Where(f => f is not null && f.SpouseIds.All(id => tree.Person(id) is not { IsPrivate: true }))
+            .SelectMany(f => f!.Events.Select(e => (e, tree.Person(f.OtherSpouse(p.Id)))));
 
     /// <summary>
     /// The latest CHAN on a person's record and their published families, capped at the
@@ -216,14 +224,19 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
             mother is null ? null : (mother.IsPrivate ? new PedigreeNode(Ref(mother), null, null) : Pedigree(mother, depth - 1)));
     }
 
-    private EventBlock ToEvent(LifeEvent e, CitationLedger ledger) => new(
-        Label: e.Label,
+    private EventBlock ToEvent(LifeEvent e, CitationLedger ledger, Person? spouse = null) => new(
+        Label: spouse is null ? e.Label : LabelWithSpouse(e),
+        Spouse: spouse is null ? null : Ref(spouse),
         Date: e.Date?.Display,
         Iso: e.Date?.IsoDate,
         Place: e.Place,
         Value: e.Value,
         Note: e.Note,
         Cites: e.Citations.Count == 0 ? null : e.Citations.Select(ledger.Number).Distinct().ToList());
+
+    /// <summary>Reads on into the spouse's name: "Marriage to", "Divorce from", "Banns with".</summary>
+    private static string LabelWithSpouse(LifeEvent e) =>
+        $"{e.Label} {e.Tag switch { "MARR" or "ENGA" => "to", "DIV" or "DIVF" or "ANUL" => "from", _ => "with" }}";
 
     private static PersonRef Ref(Person p) => p.IsPrivate
         ? new PersonRef(null, "Private", null, null, true)
@@ -251,8 +264,8 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
     // ---------------------------------------------------------------- shapes
 
     private sealed record PersonRef(string? Id, string Name, string? Lifespan, string? Url, bool? Private);
-    private sealed record EventBlock(string Label, string? Date, string? Iso, string? Place, string? Value, string? Note, List<int>? Cites);
-    private sealed record FamilyBlock(PersonRef? Spouse, EventBlock? Marriage, List<PersonRef> Children);
+    private sealed record EventBlock(string Label, PersonRef? Spouse, string? Date, string? Iso, string? Place, string? Value, string? Note, List<int>? Cites);
+    private sealed record FamilyBlock(PersonRef? Spouse, List<PersonRef> Children);
     private sealed record PedigreeNode(PersonRef Person, PedigreeNode? Father, PedigreeNode? Mother);
     private sealed record CitationBlock(int N, string SourceId, string Source, string? Url, string? Page, string? Text, string? Quality);
 
