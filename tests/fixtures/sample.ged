@@ -112,6 +112,7 @@
 2 DATE 1960
 1 FAMC @F3@
 1 FAMS @F4@
+1 FAMS @F6@
 0 @I9@ INDI
 1 NAME Joan /Kirkby/
 1 SEX F
@@ -147,11 +148,19 @@
 1 NAME George /Lund/
 1 SEX M
 1 FAMS @F5@
+0 @I15@ INDI
+1 NAME Vera /Hodgson/
+1 SEX F
+1 RESN privacy
+1 FAMS @F6@
 0 @F1@ FAM
 1 HUSB @I1@
 1 WIFE @I2@
 1 CHIL @I3@
 1 CHIL @I4@
+1 MARB
+2 DATE 21 SEP 1823
+2 PLAC Askrigg, Yorkshire, England
 1 MARR
 2 DATE 12 OCT 1823
 2 PLAC Aysgarth, Yorkshire, England
@@ -167,11 +176,28 @@
 1 MARR
 2 DATE 1849
 2 PLAC Leyburn, Yorkshire, England
+1 MARR
+2 DATE 1850
+2 PLAC Richmond, Yorkshire, England
+1 MARL
+2 PLAC Ripon, Yorkshire, England
 0 @F3@ FAM
 1 HUSB @I7@
 1 WIFE @I6@
 1 CHIL @I8@
 1 CHIL @I11@
+1 ENGA
+2 DATE 1873
+1 MARR
+2 DATE 1874
+2 PLAC Hawes, Yorkshire, England
+1 MARS
+2 DATE 1874
+1 DIV
+2 DATE 1890
+2 PLAC London, England
+2 SOUR @S1@
+3 PAGE Divorce file 1890
 0 @F4@ FAM
 1 HUSB @I8@
 1 CHIL @I9@
@@ -185,6 +211,17 @@
 1 CHIL @I10@
 1 MARR
 2 DATE 1948
+0 @F6@ FAM
+1 HUSB @I8@
+1 WIFE @I15@
+1 MARR
+2 DATE 3 APR 1950
+2 PLAC Whitby, Yorkshire, England
+2 SOUR @S5@
+3 PAGE Register 12 entry 7
+1 DIV
+2 DATE 1955
+2 PLAC Scarborough, Yorkshire, England
 0 @S1@ SOUR
 1 TITL Aysgarth Parish Registers 1780–1850
 1 AUTH Church of England, Aysgarth
@@ -202,5 +239,7 @@
 1 CHAN
 2 DATE 3 JUN 2025
 3 TIME 10:00:00
+0 @S5@ SOUR
+1 TITL Whitby Register Office Records
 0 @N1@ NOTE Hannah was remembered as a formidable baker; her parkin recipe survives in the family.
 0 TRLR

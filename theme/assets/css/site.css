@@ -75,7 +75,6 @@ main { padding-top: 1.5rem; padding-bottom: 3rem; }
 .family-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1.2rem 2rem; }
 .family-grid ul, .people-list, .plain-list { list-style: none; padding: 0; margin: 0; }
 .family-grid li, .plain-list li { padding: 0.15rem 0; }
-.marriage { font-size: 0.98rem; color: var(--ink-soft); margin: 0 0 0.4rem; }
 
 /* pedigree: each node puts its parents in a column to the right */
 .pedigree { overflow-x: auto; padding-bottom: 0.5rem; }

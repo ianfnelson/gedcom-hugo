@@ -24,7 +24,7 @@
       <li>
         <span class="when">{{ with .date }}{{ . }}{{ else }}<em>undated</em>{{ end }}</span>
         <span class="what">
-          <strong>{{ .label }}</strong>{{ with .value }}: {{ . }}{{ end }}{{ with .place }}<span class="place"> · {{ . }}</span>{{ end }}{{ partial "cites.html" . }}
+          <strong>{{ .label }}</strong>{{ with .spouse }} {{ partial "person-link.html" . }}{{ end }}{{ with .value }}: {{ . }}{{ end }}{{ with .place }}<span class="place"> · {{ . }}</span>{{ end }}{{ partial "cites.html" . }}
           {{ with .note }}<span class="event-note">{{ . }}</span>{{ end }}
         </span>
       </li>
@@ -51,7 +51,6 @@
       {{ range $p.families }}
       <div>
         <h3>{{ if .spouse }}With {{ partial "person-link.html" .spouse }}{{ else }}Family{{ end }}</h3>
-        {{ with .marriage }}<p class="marriage">Married {{ with .date }}{{ . }}{{ end }}{{ with .place }}, {{ . }}{{ end }}{{ partial "cites.html" . }}</p>{{ end }}
         {{ with .children }}<ul>{{ range . }}<li>{{ partial "person-link.html" . }}</li>{{ end }}</ul>{{ else }}<p class="muted">No children recorded.</p>{{ end }}
       </div>
       {{ end }}
