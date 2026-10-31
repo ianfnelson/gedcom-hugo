@@ -32,6 +32,14 @@ jobs:
             exit 1
           fi
 
+      # The credit always links to the project. The author's name links only if the
+      # site sets authorUrl, so the starter's blank placeholder must leave it plain.
+      - name: Footer links check
+        run: |
+          grep -q 'Compiled by Your Name\. Built with <a href=https://github.com/ianfnelson/gedcom-hugo>gedcom-hugo</a>' starter/public/index.html
+          HUGO_PARAMS_AUTHORURL=https://example.org/me hugo --source starter --minify --destination "$RUNNER_TEMP/linked"
+          grep -q 'Compiled by <a href=https://example.org/me>Your Name</a>\.' "$RUNNER_TEMP/linked/index.html"
+
       # The sample tree has later CHAN dates on a withheld person, a family with a
       # withheld child and a source only withheld people cite, and a later export date.
       # If any of them moves this date, edits to living people are showing through.

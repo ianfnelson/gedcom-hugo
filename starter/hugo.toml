@@ -15,6 +15,7 @@ theme = "theme"
 
 [params]
   author = "Your Name"                    # ✎ shown in the footer
+  authorUrl = ""                          # ✎ optional: your name links here in the footer
   description = "Family history research: ancestors, their lives, and the records behind them."  # ✎
 
 [taxonomies]

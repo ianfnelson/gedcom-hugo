@@ -30,7 +30,7 @@ Everything you edit lives in the starter folder. Lines to change are marked ✎.
 
 | File | What it's for |
 |---|---|
-| `hugo.toml` | Site title, address, author |
+| `hugo.toml` | Site title, address, author, and an optional link for your name in the footer |
 | `content/_index.md` | Your homepage text |
 | `content/people/_index.md` | Optional intro for the People page (`content/sources/_index.md` works the same way) |
 | `content/anything-else.md` | Any extra pages: stories, research notes, about |
