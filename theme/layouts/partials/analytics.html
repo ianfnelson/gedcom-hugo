@@ -1,0 +1,18 @@
+{{- /* Google Analytics, enabled by services.googleAnalytics.ID in hugo.toml. Preview deployments
+       are production builds too, so only the browser can tell them from the live site. */ -}}
+{{- with site.Config.Services.GoogleAnalytics.ID -}}
+  {{- if hugo.IsProduction -}}
+  <script>
+    if (location.hostname === {{ (urls.Parse site.BaseURL).Hostname }}) {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { dataLayer.push(arguments); };
+      gtag('js', new Date());
+      gtag('config', {{ . }});
+      var gtagScript = document.createElement('script');
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + {{ . }};
+      document.head.appendChild(gtagScript);
+    }
+  </script>
+  {{- end -}}
+{{- end -}}

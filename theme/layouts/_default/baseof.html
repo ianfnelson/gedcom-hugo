@@ -20,6 +20,7 @@
   {{ $css := slice (resources.Get "css/site.css") (resources.Get "css/custom.css") | resources.Concat "css/bundle.css" | minify | fingerprint }}
   <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
   {{ block "jsonld" . }}{{ end }}
+  {{ partial "analytics.html" . }}
   {{ partial "head-extra.html" . }}
 </head>
 <body>
