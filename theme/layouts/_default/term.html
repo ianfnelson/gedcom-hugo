@@ -1,6 +1,5 @@
 {{ define "main" }}
 <header class="page-head">
-  <p class="kicker"><a href="{{ .Parent.RelPermalink }}">{{ .Parent.Title }}</a></p>
   <h1>{{ .Title }}</h1>
   <p class="muted">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "person" "people" }}</p>
 </header>
