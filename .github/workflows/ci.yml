@@ -53,7 +53,7 @@ jobs:
       - name: Person last updated check
         run: |
           grep -q '"updated": "2024-03-12T18:40:12"' starter/_generated/content/people/i3.md
-          grep -q 'Last updated 12 March 2024' starter/public/people/i3/index.html
+          grep -q 'This page last updated 12 March 2024' starter/public/people/i3/index.html
           grep -q '<lastmod>2024-03-12T18:40:12' starter/public/sitemap.xml
           grep -q 'Recently updated' starter/public/index.html
           if grep -q '"updated"' starter/_generated/content/people/i8.md; then

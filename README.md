@@ -77,7 +77,7 @@ withhold I456   # asked not to appear
 - **Dates are rendered as recorded.** `BEF 1871` becomes "before 1871" in the text and `bef.1871` in lifespans. Only exact Gregorian dates go into schema.org data. Julian and dual-dated values (`1751/52`) are shown as written and sorted by their New Style year.
 - **Notes become page prose**, rendered as Markdown with raw HTML disabled.
 - **"Last updated" means the research, not the build.** The homepage shows the latest `CHAN` on a published person, source or family, falling back to the GEDCOM's export date and then the build time. A family counts only if everyone in it is published, so editing a living person can't move the date, even indirectly. To show it elsewhere, such as your footer, use `{{ partial "last-updated.html" . }}`.
-- **A person's "last updated" date** is the latest `CHAN` on their own record and on published families they belong to, by the same rule. It appears on their page, in the sitemap and in the homepage's "Recently updated" list. People with neither have no date and aren't listed. Dates are capped at the build time, because Hugo silently drops a page dated in the future and `CHAN` times are local.
+- **A person's "last updated" date** is the latest `CHAN` on their own record and on published families they belong to, by the same rule. It appears in their page's footer, in the sitemap and in the homepage's "Recently updated" list. People with neither have no date and aren't listed. If you override `footer.html`, add the date yourself from `.Params.updated`. Dates are capped at the build time, because Hugo silently drops a page dated in the future and `CHAN` times are local.
 
 ## Not yet supported
 
