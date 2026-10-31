@@ -10,11 +10,6 @@
     {{ with $p.alt_names }}<p class="aka">Also recorded as {{ delimit . ", " " and " }}</p>{{ end }}
   </header>
 
-  <section class="vitals">
-    {{ with $p.birth }}<div><span class="label">{{ if eq .label "Birth" }}Born{{ else }}{{ .label }}{{ end }}</span> {{ with .date }}{{ . }}{{ end }}{{ with .place }}<span class="place">, {{ . }}</span>{{ end }}{{ partial "cites.html" . }}</div>{{ end }}
-    {{ with $p.death }}<div><span class="label">{{ if eq .label "Death" }}Died{{ else }}{{ .label }}{{ end }}</span> {{ with .date }}{{ . }}{{ end }}{{ with .place }}<span class="place">, {{ . }}</span>{{ end }}{{ partial "cites.html" . }}</div>{{ end }}
-  </section>
-
   {{ with .Content }}
   <section class="story">
     {{ . }}
