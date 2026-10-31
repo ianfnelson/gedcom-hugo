@@ -18,6 +18,10 @@ theme = "theme"
   authorUrl = ""                          # ✎ optional: your name links here in the footer
   description = "Family history research: ancestors, their lives, and the records behind them."  # ✎
 
+# ✎ Optional: Google Analytics. See "Google Analytics" in the README before enabling it.
+# [services.googleAnalytics]
+#   ID = "G-XXXXXXXXXX"
+
 [taxonomies]
   surname = "surnames"
   place = "places"

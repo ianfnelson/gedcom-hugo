@@ -41,6 +41,20 @@ jobs:
           HUGO_PARAMS_AUTHORURL=https://example.org/me hugo --source starter --minify --destination "$RUNNER_TEMP/linked"
           grep -q 'Compiled by <a href=https://example.org/me>Your Name</a>\.' "$RUNNER_TEMP/linked/index.html"
 
+      # The tag needs both an ID and a production build, and must be guarded by the
+      # baseURL's hostname so preview deployments don't report to the property.
+      - name: Analytics check
+        run: |
+          export HUGO_SERVICES_GOOGLEANALYTICS_ID=G-TEST
+          hugo --source starter --minify --destination "$RUNNER_TEMP/analytics"
+          grep -q 'location.hostname==="example.org"' "$RUNNER_TEMP/analytics/index.html"
+          grep -q 'G-TEST' "$RUNNER_TEMP/analytics/index.html"
+          hugo --source starter --minify --environment development --destination "$RUNNER_TEMP/analytics-dev"
+          if grep -l googletagmanager starter/public/index.html "$RUNNER_TEMP/analytics-dev/index.html"; then
+            echo "::error::Analytics loaded without an ID or outside production"
+            exit 1
+          fi
+
       # The sample tree has later CHAN dates on a withheld person, a family with a
       # withheld child and a source only withheld people cite, and a later export date.
       # If any of them moves this date, edits to living people are showing through.

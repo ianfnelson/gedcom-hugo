@@ -30,7 +30,7 @@ Everything you edit lives in the starter folder. Lines to change are marked ✎.
 
 | File | What it's for |
 |---|---|
-| `hugo.toml` | Site title, address, author, and an optional link for your name in the footer |
+| `hugo.toml` | Site title, address, author, an optional link for your name in the footer, and optional Google Analytics |
 | `content/_index.md` | Your homepage text |
 | `content/people/_index.md` | Optional intro for the People page (`content/sources/_index.md` works the same way) |
 | `content/anything-else.md` | Any extra pages: stories, research notes, about |
@@ -92,6 +92,19 @@ withhold I456   # asked not to appear
 
 1. Deploy, then add the site to Google Search Console and submit `/sitemap.xml`.
 2. Link to it from somewhere already indexed. A single inbound link does more than any amount of metadata.
+
+## Google Analytics
+
+Add your measurement ID to `hugo.toml`:
+
+```toml
+[services.googleAnalytics]
+  ID = "G-XXXXXXXXXX"
+```
+
+The tag loads only in a production build, and only when the page is served from the host in `baseURL`, so `hugo server`, preview deployments and default hostnames aren't counted.
+
+Analytics sends visitor data to Google, including each page's address and title. Titles of person pages contain names and lifespans. Withheld people have no pages, so they aren't sent. The theme doesn't add a cookie notice or an opt-out: check what the law requires where you and your visitors are, and add anything you need through the `head-extra.html` and `footer.html` hooks.
 
 ## Licence
 
