@@ -1,4 +1,4 @@
 {{- /* Hook: override in your site's layouts/partials/footer.html. */ -}}
 {{- $author := site.Params.author -}}
 {{- $authorUrl := site.Params.authorUrl -}}
-<p>{{ with $author }}Compiled by {{ with $authorUrl }}<a href="{{ . }}">{{ $author }}</a>{{ else }}{{ . }}{{ end }}. {{ end }}Built with <a href="https://github.com/ianfnelson/gedcom-hugo">gedcom-hugo</a>.</p>
+<p>{{ with $author }}Compiled by {{ with $authorUrl }}<a href="{{ . }}">{{ $author }}</a>{{ else }}{{ . }}{{ end }}. {{ end }}Built with <a href="https://github.com/ianfnelson/gedcom-hugo">gedcom-hugo</a>.{{ with .Params.updated }} This page last updated {{ time.Format "2 January 2006" . }}.{{ end }}</p>

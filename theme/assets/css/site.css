@@ -104,7 +104,7 @@ main { padding-top: 1.5rem; padding-bottom: 3rem; }
 .sources li:target { background: var(--paper-2); }
 .quality { font-size: 0.85rem; }
 blockquote { margin: 0.3rem 0 0; padding-left: 0.8rem; border-left: 2px solid var(--rule); font-style: italic; color: var(--ink-soft); }
-.unsourced { margin-top: 2rem; padding: 0.8rem 1rem; border: 1px dashed var(--accent-soft); font: 0.95rem/1.5 var(--sans); color: var(--ink-soft); }
+.unsourced { margin: 2rem 0; padding: 0.8rem 1rem; border: 1px dashed var(--accent-soft); font: 0.95rem/1.5 var(--sans); color: var(--ink-soft); }
 
 /* indexes */
 .page-head { margin-bottom: 1rem; }
