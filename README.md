@@ -5,7 +5,7 @@ Turns a GEDCOM family tree into a static website with [Hugo](https://gohugo.io):
 It was built for [Family Historian](https://www.family-historian.co.uk) exports but reads any GEDCOM 5.5.1 file.
 
 ```
-src/GedcomHugo/     the converter (.NET 8+, no package dependencies)
+src/GedcomHugo/     the converter (.NET 10, no package dependencies)
 theme/              the Hugo theme: layouts and CSS
 starter/            a ready-to-run site using the theme; copy it to make your own
 tests/fixtures/     synthetic GEDCOMs only; never commit a real tree here
@@ -13,7 +13,7 @@ tests/fixtures/     synthetic GEDCOMs only; never commit a real tree here
 
 ## Quick start
 
-You need the [.NET SDK](https://dotnet.microsoft.com/download) (8 or later) and [Hugo](https://gohugo.io/installation/) (0.128 or later; the standard edition is fine).
+You need the [.NET 10 SDK](https://dotnet.microsoft.com/download) and [Hugo](https://gohugo.io/installation/) (0.128 or later; the standard edition is fine).
 
 ```sh
 git clone <this repo> && cd gedcom-hugo/starter
