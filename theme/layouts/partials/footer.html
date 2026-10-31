@@ -1,2 +1,4 @@
 {{- /* Hook: override in your site's layouts/partials/footer.html. */ -}}
-<p>{{ with site.Params.author }}Compiled by {{ . }}. {{ end }}Built with gedcom-hugo.</p>
+{{- $author := site.Params.author -}}
+{{- $authorUrl := site.Params.authorUrl -}}
+<p>{{ with $author }}Compiled by {{ with $authorUrl }}<a href="{{ . }}">{{ $author }}</a>{{ else }}{{ . }}{{ end }}. {{ end }}Built with <a href="https://github.com/ianfnelson/gedcom-hugo">gedcom-hugo</a>.</p>
