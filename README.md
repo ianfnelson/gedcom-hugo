@@ -37,6 +37,7 @@ Everything you edit lives in the starter folder. Lines to change are marked ✎.
 | `overrides.txt` | Privacy decisions that beat the automatic rules |
 | `assets/css/custom.css` | Extra styles, loaded after the theme's own (create it) |
 | `layouts/partials/footer.html` | Your own footer (create it; the same goes for `head-extra.html`) |
+| `static/favicon.svg` | Your own icon, replacing the theme's (add `favicon.ico` and `apple-touch-icon.png` beside it too) |
 
 Any theme template can be overridden by putting a file at the same path under your site's `layouts/`. Prefer the small hooks above where they'll do: an overridden template stops receiving theme improvements.
 
