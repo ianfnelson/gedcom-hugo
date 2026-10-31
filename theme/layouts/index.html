@@ -7,9 +7,9 @@
 </section>
 
 <section>
-  <h2>Surnames</h2>
+  <h2>Top Surnames</h2>
   <ul class="term-cloud">
-    {{ range site.Taxonomies.surnames.ByCount }}
+    {{ range first 30 site.Taxonomies.surnames.ByCount }}
     <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> <span class="count">{{ .Count }}</span></li>
     {{ end }}
   </ul>
