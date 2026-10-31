@@ -4,7 +4,6 @@
 {{ $p := .Params }}
 <article class="person">
   <header class="person-head">
-    <p class="kicker">{{ with $p.surnames }}{{ range . }}<a href="{{ (printf "/surnames/%s/" (urlize .)) | relURL }}">{{ . }}</a>{{ end }}{{ end }}</p>
     <h1>{{ $p.name }}</h1>
     {{ with $p.lifespan }}<p class="lifespan">{{ . }}</p>{{ end }}
     {{ with $p.alt_names }}<p class="aka">Also recorded as {{ delimit . ", " " and " }}</p>{{ end }}

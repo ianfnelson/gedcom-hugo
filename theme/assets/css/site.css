@@ -46,11 +46,9 @@ h3 { font-size: 1.1rem; margin: 0 0 0.4rem; }
 main { padding-top: 1.5rem; padding-bottom: 3rem; }
 
 /* small labels, dates, counts */
-.kicker, .dates, .count, .muted, .stats, .quality, .colophon {
+.dates, .count, .muted, .stats, .quality, .colophon {
   font-family: var(--sans); color: var(--ink-soft);
 }
-.kicker { font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 0; }
-.kicker a { color: var(--ink-soft); text-decoration: none; margin-right: 0.6rem; }
 .dates { font-size: 0.85rem; font-variant-numeric: lining-nums tabular-nums; white-space: nowrap; }
 .muted { font-size: 0.95rem; }
 .private { font-style: italic; color: var(--ink-soft); }

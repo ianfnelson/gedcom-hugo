@@ -1,7 +1,6 @@
 {{ define "main" }}
 <article class="source">
   <header class="page-head">
-    <p class="kicker"><a href="{{ "/sources/" | relURL }}">Source</a></p>
     <h1>{{ .Title }}</h1>
     {{ with .Params.author }}<p class="muted">{{ . }}</p>{{ end }}
     {{ with .Params.publication }}<p class="muted">{{ . }}</p>{{ end }}
