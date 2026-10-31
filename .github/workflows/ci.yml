@@ -40,6 +40,27 @@ jobs:
           grep -q '"last_updated": "2024-03-12T18:40:12"' starter/_generated/data/site.json
           grep -q 'updated 12 March 2024' starter/public/index.html
 
+      # I3's date comes from its family. I8's only CHAN is on a family with a withheld
+      # child, so it must have no date, or an edit to a living person is showing through.
+      - name: Person last updated check
+        run: |
+          grep -q '"updated": "2024-03-12T18:40:12"' starter/_generated/content/people/i3.md
+          grep -q 'Last updated 12 March 2024' starter/public/people/i3/index.html
+          grep -q '<lastmod>2024-03-12T18:40:12' starter/public/sitemap.xml
+          grep -q 'Recently updated' starter/public/index.html
+          if grep -q '"updated"' starter/_generated/content/people/i8.md; then
+            echo "::error::A family with a withheld member moved a person's date"
+            exit 1
+          fi
+
+      # Hugo silently drops a page published in the future, and lastmod sets that date.
+      # Rebuilds the site, so keep this after the checks on the sample tree.
+      - name: Future change date check
+        run: |
+          sed 's/^2 DATE 12 MAR 2024/2 DATE 12 MAR 2099/' tests/fixtures/sample.ged > "$RUNNER_TEMP/future.ged"
+          ./starter/build.sh "$RUNNER_TEMP/future.ged"
+          test -f starter/public/people/i1/index.html
+
   # Rebuilds the private site whenever the converter changes. Needs a repository
   # variable SITE_REPOSITORY (e.g. owner/family-tree) and a secret SITE_DISPATCH_TOKEN:
   # a fine-grained token with Contents: read & write on that one repository.

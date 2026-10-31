@@ -15,6 +15,17 @@
   </ul>
 </section>
 
+{{ with where $people "Params.updated" "!=" nil }}
+<section>
+  <h2>Recently updated</h2>
+  <ul class="term-cloud">
+    {{ range first 20 (sort . "Params.updated" "desc") }}
+    <li><a href="{{ .RelPermalink }}">{{ .Params.name }}</a> <span class="dates">{{ time.Format "2 January 2006" .Params.updated }}</span></li>
+    {{ end }}
+  </ul>
+</section>
+{{ end }}
+
 <section>
   <h2>Earliest ancestors</h2>
   <ul class="term-cloud">

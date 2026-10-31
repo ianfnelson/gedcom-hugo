@@ -87,5 +87,7 @@
   {{ else }}
   <aside class="unsourced">No sources are cited for this person yet; treat these details as unverified.</aside>
   {{ end }}
+
+  {{ with $p.updated }}<p class="muted">Last updated {{ time.Format "2 January 2006" . }}</p>{{ end }}
 </article>
 {{ end }}

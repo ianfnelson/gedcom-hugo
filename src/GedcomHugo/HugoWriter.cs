@@ -126,6 +126,7 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
         foreach (var c in citations.All) Register(c.SourceId, p);
 
         var lifespan = Lifespan(p);
+        var updated = LastUpdated(p);
         var surnames = new[] { p.Surname }.Where(s => s.Length > 0).ToList();
         var places = p.Events.Select(e => e.Place).Concat(families.Select(f => f.Marriage?.Place))
             .Where(pl => !string.IsNullOrWhiteSpace(pl)).Select(pl => pl!).Distinct().ToList();
@@ -141,6 +142,8 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
             Sex: p.Sex,
             Lifespan: lifespan,
             BirthYear: p.Birth?.Date?.Year,
+            Updated: updated,
+            Lastmod: updated,
             AltNames: p.AlternateNames.Count > 0 ? p.AlternateNames : null,
             Birth: p.Birth is { } b ? ToEvent(b, citations) : null,
             Death: p.Death is { } d ? ToEvent(d, citations) : null,
@@ -152,6 +155,20 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
             Citations: citations.All,
             Surnames: surnames,
             Places: places);
+    }
+
+    /// <summary>
+    /// The latest CHAN on a person's record and their published families, capped at the
+    /// build time. This becomes Hugo's lastmod and so the page's publish date, and Hugo
+    /// silently drops pages published in the future. CHAN times are local, so in a time
+    /// zone ahead of UTC, anyone edited shortly before a build would otherwise vanish.
+    /// </summary>
+    private DateTime? LastUpdated(Person p)
+    {
+        var latest = p.SpouseInFamilies.Concat(p.ChildOfFamilies).Select(tree.Family)
+            .Where(f => f is not null && IsPublished(f)).Select(f => f!.LastChanged)
+            .Append(p.LastChanged).Max();
+        return latest > buildTime ? buildTime : latest;
     }
 
     private static string? Lifespan(Person p)
@@ -241,7 +258,7 @@ public sealed class HugoWriter(Tree tree, string outDir, DateTime buildTime)
 
     private sealed record PersonPage(
         string Title, string Description, string PersonId, string Name, string Given, string Surname, string SortName,
-        string? Sex, string? Lifespan, int? BirthYear, List<string>? AltNames, EventBlock? Birth, EventBlock? Death,
+        string? Sex, string? Lifespan, int? BirthYear, DateTime? Updated, DateTime? Lastmod, List<string>? AltNames, EventBlock? Birth, EventBlock? Death,
         List<EventBlock> Events, List<PersonRef> Parents, List<PersonRef> Siblings, List<FamilyBlock> Families,
         PedigreeNode? Pedigree, List<CitationBlock> Citations, List<string> Surnames, List<string> Places);
 
