@@ -17,8 +17,8 @@
 
 <section>
   <h2>Earliest ancestors</h2>
-  <ul class="plain-list">
-    {{ range first 8 (sort (where $people "Params.birth_year" "!=" nil) "Params.birth_year") }}
+  <ul class="term-cloud">
+    {{ range first 20 (sort (where $people "Params.birth_year" "!=" nil) "Params.birth_year") }}
     <li><a href="{{ .RelPermalink }}">{{ .Params.name }}</a> <span class="dates">{{ .Params.lifespan }}</span></li>
     {{ end }}
   </ul>
